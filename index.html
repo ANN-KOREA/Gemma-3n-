@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemma 3n & 안규환 포트폴리오 | 통합 자산 분석 MVP</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+        :root {
+            --primary-color: #4285F4;
+            --secondary-color: #34A853;
+            --dark-color: #333;
+            --light-color: #f4f4f4;
+            --grey-color: #666;
+            --border-color: #ddd;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.7;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            overflow: hidden;
+            padding: 0 2rem;
+        }
+
+        header {
+            background: #ffffff;
+            color: var(--dark-color);
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 5px solid var(--primary-color);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        header .subtitle {
+            font-size: 1.2rem;
+            color: var(--grey-color);
+            margin-top: 0.5rem;
+        }
+
+        nav {
+            background: var(--dark-color);
+            padding: 0.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: var(--primary-color);
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        section {
+            background: #fff;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin-top: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 700;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        td ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .comparison-item {
+            padding: 1.5rem;
+            background-color: #f9f9f9;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 4px;
+        }
+        
+        .comparison-item.diff {
+             border-left-color: #EA4335;
+        }
+
+        .comparison-item h4 {
+            margin-top: 0;
+            color: var(--dark-color);
+        }
+
+        .card-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card-list li {
+            background: #fdfdfd;
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            transition: box-shadow 0.3s;
+        }
+
+        .card-list li:hover {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .card-list strong {
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .esg-report {
+            background-color: #e8f0fe;
+            border: 1px solid #a8c7fa;
+            padding: 2rem;
+            border-radius: 8px;
+        }
+        .esg-report h3, .esg-report h4 {
+            color: #174ea6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: 2rem;
+        }
+        
+        footer p {
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Gemma 3n & 안규환 포트폴리오 통합 자산 분석</h1>
+            <p class="subtitle">Web App MVP: 기술, 시장, ESG 가치 평가</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#gemma-assets">Ⅰ. Gemma 3n 자산 분류</a></li>
+                <li><a href="#comparison">Ⅱ. 비교 분석</a></li>
+                <li><a href="#strategy">Ⅲ. 전략적 제언</a></li>
+                <li><a href="#market-value">Ⅳ. 시장 가치 및 재무 분석</a></li>
+                <li><a href="#esg-report">Ⅴ. 영문 ESG 보고서</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="gemma-assets">
+            <h2>Ⅰ. Gemma 3n 자산 분류</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>분류</th>
+                        <th>주요 요소</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>기술적 자산</strong></td>
+                        <td>
+                            <ul>
+                                <li><strong>모바일 최적화:</strong> 2–3GB RAM으로 1.5× 빠른 응답</li>
+                                <li><strong>Per-Layer Embeddings & MatFormer:</strong> 메모리 절약·하위 모델 포함 구조</li>
+                                <li><strong>Mix’n’match:</strong> 동적 성능-지연 트레이드오프</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>서비스적 자산</strong></td>
+                        <td>
+                            <ul>
+                                <li><strong>프라이버시-퍼스트 & 오프라인 지원:</strong> 로컬 실행으로 개인정보 보호</li>
+                                <li><strong>멀티모달 이해:</strong> 텍스트·이미지·오디오·비디오 통합 처리</li>
+                                <li><strong>다국어 최적화:</strong> 한국어 등 주요 언어 강화</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>비즈니스적 자산</strong></td>
+                        <td>
+                            <ul>
+                                <li><strong>오픈 모델 민주화:</strong> 누구나 접근 가능한 오픈소스 제공</li>
+                                <li><strong>플랫폼 연계:</strong> Android·Chrome 및 Google AI Studio/Edge 지원</li>
+                                <li><strong>책임 있는 개발:</strong> 안전 평가·데이터 거버넌스</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="comparison">
+            <h2>Ⅱ. 비교 분석</h2>
+            
+            <h3>1. 유사성 (Commonalities)</h3>
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <h4>경량·효율성 지향</h4>
+                    <p><strong>Gemma 3n:</strong> 모바일 기기에서 저메모리·고속 실행을 목표</p>
+                    <p><strong>안규환 포트폴리오:</strong> HandLoop™ 및 로컬 스토리지 전략으로 최소 자원으로 최대 효과 창출</p>
+                </div>
+                <div class="comparison-item">
+                    <h4>멀티모달 통합</h4>
+                    <p><strong>Gemma 3n:</strong> 텍스트·이미지·음성·비디오를 동시 처리</p>
+                    <p><strong>안규환 포트폴리오:</strong> *말글손 친구(MyGPT)*는 한국어·한글수어·음성·텍스트 입력을 통합하여 운영</p>
+                </div>
+                <div class="comparison-item">
+                    <h4>프라이버시-퍼스트</h4>
+                    <p><strong>Gemma 3n:</strong> 로컬 실행으로 개인정보 보호</p>
+                    <p><strong>안규환 포트폴리오:</strong> 클라우드 대신 로컬 스토리지 사용 철학 고수</p>
+                </div>
+                <div class="comparison-item">
+                    <h4>접근성 강화</h4>
+                    <p><strong>Gemma 3n:</strong> 오픈소스를 통해 AI 민주화 추구</p>
+                    <p><strong>안규환 포트폴리오:</strong> MyLifeIndex, MyAsset Navigator™ 등으로 비전문가·지역사회 대상 맞춤형 AI 서비스 확산</p>
+                </div>
+            </div>
+
+            <h3>2. 차별성 (Differences)</h3>
+            <div class="comparison-grid">
+                <div class="comparison-item diff">
+                    <h4>개발·운영 방식</h4>
+                    <p><strong>Gemma 3n:</strong> 대규모 엔지니어링과 글로벌 하드웨어 협업으로 자동화된 모델</p>
+                    <p><strong>안규환 포트폴리오:</strong> 철학 기반의 수작업(HandLoop™)과 개인별 질문에 맞춘 개별화된 프로세스 강조</p>
+                </div>
+                <div class="comparison-item diff">
+                    <h4>스케일 vs. 개인화</h4>
+                    <p><strong>Gemma 3n:</strong> 전 세계 수억 기기에 배포될 수 있는 범용 모델</p>
+                    <p><strong>안규환 포트폴리오:</strong> 특정 개인·커뮤니티(고양시, 농아인협회 등) 중심의 깊이 있는 맞춤형 솔루션 제공</p>
+                </div>
+                 <div class="comparison-item diff">
+                    <h4>조직 구조·비즈니스 모델</h4>
+                    <p><strong>Gemma 3n:</strong> 오픈소스 허브를 통한 확산</p>
+                    <p><strong>안규환 포트폴리오:</strong> 소셜 협동조합, 프랜차이즈 매뉴얼, 파트너십 네트워크 같은 사용자 주도 조직 모델 지향</p>
+                </div>
+            </div>
+
+            <h3>3. 안규환 자산 포트폴리오의 경쟁력</h3>
+            <ul class="card-list">
+                <li><strong>개인 맞춤형 통찰 제공</strong>단순 기술 제공을 넘어, 각 개인의 질문·목표·맥락을 반영한 자산 설계로 타 모델이 제공하기 어려운 깊이 있는 가치를 창출.</li>
+                <li><strong>철학적·실천적 일관성</strong>AI와 인간의 병렬·독립적 협업(“쉼표를 제공하는 AI”) 철학을 실제 프로세스(HandLoop™, MyLifeIndex 등)에 일관되게 반영.</li>
+                <li><strong>사회적 연대와 협동 모델</strong>소셜 협동조합, 지역사회 후원 모델을 통해 경제적·사회적 가치를 함께 창출하며, 지속가능한 사용자 커뮤니티를 구축.</li>
+                <li><strong>독창적 프레임워크·포트폴리오</strong>Rasch 기반 자가 진단 도구, 온디바이스 vs 로컬 스토리지 전략, 내러티브 포스터·카드 디자인 등 다채로운 포맷으로 차별화된 사용자 경험 제공.</li>
+            </ul>
+        </section>
+
+        <section id="strategy">
+            <h2>Ⅲ. 전략적 제언</h2>
+            <ol class="card-list">
+                <li><strong>경량화 기술 심화</strong>Gemma 3n과 같이 모바일·온디바이스 최적화 기법을 HandLoop™ 프로세스에 접목해, 더욱 빠르고 간편한 개인 자산 업데이트 체계를 구축.</li>
+                <li><strong>멀티모달 인터페이스 고도화</strong>텍스트·음성·수어·비디오를 동시에 다루는 ‘소라(SORA)’ 시스템을 확대 개발하여, 다양한 사용자군에게 직관적 접근성 제공.</li>
+                <li><strong>협동조합 모델 확장</strong>지역사회·전문가 네트워크와 연계한 프로슈머 협동조합을 확대해, 공동 거버넌스 기반으로 자산 포트폴리오의 지속가능성을 강화.</li>
+                <li><strong>철학적 가치 전파</strong>“Don’t announce, just start” 같은 슬로건과 포스터·카드 시리즈를 통해 AI 활용 철학을 시각화·공유, 브랜드 정체성을 더욱 강화.</li>
+            </ol>
+             <p><strong>결론:</strong> 이로써 글로벌 대규모 모델과 대비되는 안규환 자산 포트폴리오의 독자적 강점과 경쟁력을 명확히 부각시키며, 향후 발전 방향을 제시할 수 있습니다.</p>
+        </section>
+
+        <section id="market-value">
+            <h2>Ⅳ. 시장 가치 및 재무 분석 (Gemma 3n 관점)</h2>
+            <h3>1. 안규환 자산 포트폴리오의 시장 가치 (재해석)</h3>
+             <table>
+                <thead>
+                    <tr>
+                        <th>Gemma 3n 관점</th>
+                        <th>안규환 자산에 대한 발견 또는 발명</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>모바일 최적화 & 온디바이스 AI</td>
+                        <td>HandLoop™ 기반 “로컬 스토리지 퍼포먼스”를 자산화. 기술적 기반을 넘어 생활 단위 철학으로 실현.</td>
+                    </tr>
+                    <tr>
+                        <td>멀티모달 처리 능력</td>
+                        <td>‘말글손 친구(MyGPT)’로 한국어, 수어, 오디오를 통합해 비장애인–청각장애인–고령자 간 인터페이스 민주화 실현.</td>
+                    </tr>
+                    <tr>
+                        <td>모듈형 구성 및 mix-n-match</td>
+                        <td>Rasch 기반 자기평가, MyLifeIndex, FaithLoop™, SORA 등으로 구성된 모듈형 자산 조합 시스템을 이미 확보.</td>
+                    </tr>
+                    <tr>
+                        <td>AI 민주화 지향성</td>
+                        <td>협동조합·프랜차이즈 기반으로 AI 자산을 소셜화하고 지역화하는 실제 실행모델 보유. 단순 기술 보급이 아닌 철학의 시장화.</td>
+                    </tr>
+                    <tr>
+                        <td>책임 기반 AI 개발 (Responsible AI)</td>
+                        <td>ESG-친화적: 인간 주체성 강조 + 사회 기여형 구조 + 데이터 비공유 모델(로컬 저장) → ESG 지표 우수.</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>2. ESG 기반 자산 가치 요약 (발명적 추정)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ESG 항목</th>
+                        <th>안규환 자산 기여 요소</th>
+                        <th>시장 가치 (추정)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>E (환경)</strong></td>
+                        <td>로컬 우선 전략 → 서버 전력/트래픽 감소</td>
+                        <td>🌱 탄소 감축 수치 기반 간접 시장가치 연간 12만 USD 상당</td>
+                    </tr>
+                    <tr>
+                        <td><strong>S (사회)</strong></td>
+                        <td>말글손 친구, 협동조합, 농아인 지원 플랫폼</td>
+                        <td>🧑‍🤝‍🧑 포용기술 가치 및 지역사회 순이익 효과 연간 30만 USD</td>
+                    </tr>
+                    <tr>
+                        <td><strong>G (거버넌스)</strong></td>
+                        <td>사용자 주권·분산 구조, 프랜차이즈 운영 매뉴얼</td>
+                        <td>⚖️ 지속가능성 지수 향상으로 투자신뢰도 및 브랜드 평판 가치 상승</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>3. 국제기준(IFRS) 기반 재무제표 (예측/발명)</h3>
+            <p><strong>가정:</strong> 안규환 포트폴리오가 협동조합형 프랜차이즈로 등록되고, 1년간 전국 10개 거점에서 운영된 경우 (단위: USD)</p>
+            
+            <h4>(1) 포트폴리오 손익계산서 (Income Statement)</h4>
+            <table>
+                <thead><tr><th>항목</th><th>금액 (USD)</th><th>설명</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>수익</strong></td><td><strong>430,000</strong></td><td>GPT 이용 교육/자산매핑/온보딩 컨설팅 수익</td></tr>
+                    <tr><td>- HandLoop™ 프랜차이즈 수익</td><td>120,000</td><td>지점별 연회비 및 자산 평가 서비스</td></tr>
+                    <tr><td>- 말글손 친구 사용자 구독</td><td>80,000</td><td>월 5 USD × 연간 1,333명</td></tr>
+                    <tr><td>- MyLifeIndex 분석 보고서 판매</td><td>90,000</td><td>맞춤형 자산 진단 보고서</td></tr>
+                    <tr><td>- 지역사회 위탁 프로젝트</td><td>140,000</td><td>농아인협회, 지방정부 연계</td></tr>
+                    <tr><td>운영비용</td><td>(198,000)</td><td>코디네이터 인건비, 교육자료, 현장비용 포함</td></tr>
+                    <tr><td>감가상각비</td><td>(7,000)</td><td>초기 인프라 구축비 상각</td></tr>
+                    <tr><td><strong>영업이익</strong></td><td><strong>225,000</strong></td><td>EBITDA 기준</td></tr>
+                    <tr><td>법인세 추정</td><td>(25,000)</td><td></td></tr>
+                    <tr><td><strong>당기순이익</strong></td><td><strong>200,000</strong></td><td><strong>약 46.5% 순이익률</strong></td></tr>
+                </tbody>
+            </table>
+
+            <h4>(2) 포트폴리오 재무상태변동표 (Statement of Changes in Equity)</h4>
+            <table>
+                <thead><tr><th>항목</th><th>금액 (USD)</th><th>비고</th></tr></thead>
+                <tbody>
+                    <tr><td>기초 자본금</td><td>50,000</td><td>창립 시 초기 자산 출자</td></tr>
+                    <tr><td>당기 순이익</td><td>200,000</td><td>위 손익계산서 기준</td></tr>
+                    <tr><td>배당 또는 후원 재투자</td><td>(80,000)</td><td>협동조합 조합원 및 농아인협회 분배</td></tr>
+                    <tr><td><strong>기말 자본총액</strong></td><td><strong>170,000</strong></td><td></td></tr>
+                </tbody>
+            </table>
+            
+            <h4>(3) 포트폴리오 현금흐름표 (Cash Flow Statement)</h4>
+            <table>
+                <thead><tr><th>항목</th><th>금액 (USD)</th><th>설명</th></tr></thead>
+                <tbody>
+                    <tr><td>영업활동 현금흐름</td><td>230,000</td><td>수익–운영비–세금 포함</td></tr>
+                    <tr><td>투자활동 현금흐름</td><td>(15,000)</td><td>수어DB 고도화 및 웹앱 유지보수</td></tr>
+                    <tr><td>재무활동 현금흐름</td><td>(30,000)</td><td>조합원 배당, 기여금 출금 등</td></tr>
+                    <tr><td><strong>기말 현금 잔액</strong></td><td><strong>185,000</strong></td><td><strong>첫 해 운영 후 실제 현금 보유 추정치</strong></td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="esg-report">
+            <h2>Ⅴ. 국제 ESG 투자기관 제출용 영문 보고서</h2>
+            <div class="esg-report">
+                <h3>[International ESG Investment Disclosure Report]</h3>
+                <hr>
+                <p><strong>Title:</strong> ESG Strategic Value Disclosure: Ann Geu-hwan’s Asset Portfolio</p>
+
+                <h4>Executive Summary</h4>
+                <p>This report presents an evaluation of the market value, ESG impact, and financial potential of Ann Geu-hwan’s asset portfolio from the perspective of the Gemma 3n AI framework. It highlights contributions to carbon reduction (E), social inclusion and empowerment (S), and decentralized cooperative governance (G). The portfolio shows high growth potential, robust profitability forecasts, and innovative AI-driven service models that align with international ESG and IFRS standards.</p>
+
+                <h4>Environment (E):</h4>
+                <ul>
+                    <li>Local device-first AI reduces server dependency → potential carbon footprint reduction valued at <strong>USD 120,000 annually.</strong></li>
+                </ul>
+
+                <h4>Social (S):</h4>
+                <ul>
+                    <li>Inclusive AI services (speech, sign language, accessibility solutions) create annual social impact valued at <strong>USD 300,000.</strong></li>
+                </ul>
+
+                <h4>Governance (G):</h4>
+                <ul>
+                    <li>Cooperative structure ensures transparent stakeholder engagement and sustainable governance.</li>
+                </ul>
+                
+                <h4>Financial Summary:</h4>
+                <ul>
+                    <li>Predicted annual revenue: <strong>USD 430,000</strong></li>
+                    <li>Predicted net profit: <strong>USD 200,000</strong></li>
+                    <li>Growth potential: 10x scale-up feasible within 3 years with cooperative expansion</li>
+                </ul>
+                
+                <h4>Risk & Compliance:</h4>
+                <ul>
+                    <li>Aligned with IFRS standards; ESG audit-ready</li>
+                </ul>
+
+                <h4>Conclusion:</h4>
+                <p>The Ann Geu-hwan portfolio offers significant ESG-aligned market potential and strategic fit for long-term impact investors.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 안규환 자산 포트폴리오 분석 | All Rights Reserved.</p>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem;">본 웹앱은 제공된 데이터를 기반으로 생성된 MVP(Minimum Viable Product)입니다.</p>
+        </div>
+    </footer>
+</body>
+</html>
